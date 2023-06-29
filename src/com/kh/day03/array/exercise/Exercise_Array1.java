@@ -75,7 +75,7 @@ public class Exercise_Array1 {
 		int [] lotto = new int[6]; // 배열선언
 		for(int i = 0; i < lotto.length; i++) {
 			// 랜덤한 숫자 6개 생성 후 lotto배열에 대입
-			lotto[i] =  rand.nextInt(44)+1;
+			lotto[i] =  rand.nextInt(45)+1;
 			// 중복 체크
 			for(int j = 0; j < i; j++) {
 				if(lotto[i] == lotto[j]) {
