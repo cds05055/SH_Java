@@ -11,11 +11,11 @@ public class Run {
 //		 exArr.exercise1();
 //		exArr.exercise2();
 //		exArr.arryCopyExercise();
-//		exArr.lottoExercise();
-		exArr.rockScissorPaper();
+		exArr.lottoExercise();
+//		exArr.rockScissorPaper();
 		
 		Exercise_For exFor = new Exercise_For();
 //		exFor.forExercise2();
-//		exFor.forDuobleExercise3();
+//		exFor.forDoubleExercise3();
 	}
 }

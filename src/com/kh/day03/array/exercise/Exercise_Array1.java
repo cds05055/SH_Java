@@ -104,7 +104,7 @@ public class Exercise_Array1 {
 			} 
 		}
 		// 출력
-		System.out.print("로또번호 : ");
+		System.out.print("로또번호(정렬후) : ");
 		for(int i = 0; i < lotto.length; i++) {
 			System.out.print(lotto[i] + " ");
 			}
@@ -185,5 +185,6 @@ public class Exercise_Array1 {
 			}
 		}
 	}
+
 }
 
