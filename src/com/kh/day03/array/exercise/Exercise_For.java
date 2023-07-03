@@ -78,12 +78,10 @@ public class Exercise_For {
 	
 	public void forDoubleExercise3() {
 		// 별 찍기 (10개)
-		int count = 1;
-		for(int i = 0; i < 10; i++) {
+		for(int i = 0; i < 4; i++) {
 			for(int j = 1; j < i+1; j++) {
 				System.out.print("*");
 			}
-			count++;
 			System.out.println("");
 		}
 	}
@@ -179,5 +177,101 @@ public class Exercise_For {
 		}
 	}
 	
+	public void forPart2No1() {
+	    // 1번
+	    // 1부터 사용자에게 입력 받은 수까지 중에서
+	    // 1) 2와 3의 배수를 모두 출력하고
+	    // 2) 2와 3의 공배수의 개수를 출력하세요.
+		Scanner sc = new Scanner(System.in);
+		System.out.print("정수 하나 입력 : ");
+		int input = sc.nextInt();
+		if(input < 1) {
+			System.out.println("1 이상의 수를 입력해주세요.");
+		} else {
+			System.out.println("2와 3의 배수");
+			for(int i = 1; i <= input; i++) {
+				// 1) 2와 3의 배수를 모두 출력
+				if(i % 2 == 0 || i % 3 ==0) {
+					if(i != input) {
+						System.out.print(i + " ");						
+					}else {
+						System.out.println(i);						
+					}
+				}
+			}
+			System.out.println("2와 3의 공배수");
+			for(int i = 1; i <= input; i++) {
+				// 1) 2와 3의 배수를 모두 출력
+				if(i % 2 == 0 && i % 3 ==0) {
+					System.out.print(i + " ");
+				}
+			}
+		}
+	}
+	
+	public void forPart2No2() {
+	    // 2번
+	    /*
+	       다음과 같은 실행 예제를 구현하세요.
+	       ex. 정수 입력 : 3
+	     *
+	     **
+	     ***
+	     **
+	     *
+	     
+	     */
+		Scanner sc = new Scanner(System.in);
+		System.out.print("정수 입력 : ");
+		int input = sc.nextInt();
+
+		for(int i = 0; i <= input; i++) {
+			for(int j = 1; j < i+1; j++) {
+				System.out.print("*");
+			}
+			System.out.println("");
+		}
+		for(int i = input-1; i >= 1; i--) {
+			for(int j = 1; j < i+1; j++) {
+				System.out.print("*");
+			}
+			System.out.println("");
+		}
+	}
+	
+	public void forPart2No3() {
+	    // 3번
+	    /*
+	       다음과 같은 실행 예제를 구현하세요.
+	       ex. 정수 입력 : 4
+	     * 
+	     ***
+	     *****
+	     *******
+	     
+	     */
+		Scanner sc = new Scanner(System.in);
+		System.out.print("정수 입력 : ");
+		int input = sc.nextInt();
+		
+//		for(int i = 1; i <= input; i++) {
+//			for(int j = 1; j < i+1; j++) {
+//				System.out.print("*");
+//				if(j >= 2) {
+//					for(int k = 1; k < j+1; k++) {
+//						System.out.print("*");					
+//					}					
+//				}
+//			}
+//			System.out.println("");
+//		}
+
+		for(int i = 1; i <= input; i++) {
+			for(int j = 1; j < i+1; j++) {
+				System.out.print("*");		
+			}
+			System.out.println("");
+		}
+	}
 	
 }

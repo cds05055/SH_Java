@@ -22,6 +22,9 @@ public class Run {
 //		exFor.numOutput3();
 //		exFor.numOutput4();
 //		exFor.numOutput5();
-		exFor.numOutput6();
+//		exFor.numOutput6();
+//		exFor.forPart2No1();
+//		exFor.forPart2No2();
+		exFor.forPart2No3();
 	}
 }
