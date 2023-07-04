@@ -7,9 +7,9 @@ public class MemberRun {
 	public static void main(String[] args) {
 		Member [] memArr = new Member[2];
 		Scanner sc = new Scanner(System.in);
-		String name = "";
-		int score1 = 0;
-		int score2 = 0;
+//		String name = "";
+//		int score1 = 0;
+//		int score2 = 0;
 		
 		for(;;) {
 			int input = printMenu();
