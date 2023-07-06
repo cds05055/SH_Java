@@ -22,7 +22,7 @@ public class Bank {
 		this.balance += moneyInMyAcc;   
 	}
 	
-	// 출금될 계좌에서 누적차 구하는 메소드
+	// 출금될 계좌에서 입금할 금액의 차를 구하는 메소드
 	public void minusMoney(int moneyInMyAcc) {
 		this.balance -= moneyInMyAcc;
 	}

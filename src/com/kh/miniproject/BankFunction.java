@@ -38,10 +38,19 @@ public class BankFunction {
 		System.out.println("회원 등록을 선택하셨습니다.");
 		System.out.print("회원명 : ");
 		String user = sc.next();
+		String userAccNum = "";
 		sc.nextLine(); // 공백입력 방지
-		System.out.print("계좌번호(4자리) : ");
-		String userAccNum = sc.next();
-		sc.nextLine(); // 공백입력 방지
+		for(;;) {
+			System.out.print("계좌번호(4자리) : ");
+			userAccNum = sc.next();
+			sc.nextLine(); // 공백입력 방지
+			if(userAccNum.length() != 4) {
+				// 계좌번호 4자리만 입력 가능
+				System.out.println("4자리가 아닙니다. 4자리를 입력해주세요.");
+			} else {
+				break;
+			}
+		}
 		System.out.print("초기 입금 금액 : ");
 		int userBalance = sc.nextInt();
 		for(;;) {
@@ -49,12 +58,12 @@ public class BankFunction {
 			// 무한루프 for문 작성
 			System.out.print("위 정보가 맞으시면 Y, 아니라면 N을 입력해주세요 : ");
 			char infoYN = sc.next().charAt(0);
-			if(infoYN == 'N') {
+			if(infoYN == 'N' || infoYN == 'n') {
 				System.out.println("=========================================");
 				System.out.println("취소하셨습니다. 메뉴선택으로 돌아갑니다.");
 				System.out.println("=========================================");
 				break;
-			} else if(infoYN == 'Y') {
+			} else if(infoYN == 'Y' || infoYN == 'y') {
 				// 객체 배열의 첫번째 인덱스부터 하나씩 확인하여 null값이 있는 곳에 객체 생성
 				for(int i = 0; i < bankArrs.length; i++) {
 					if(bankArrs[i] == null) {
@@ -80,53 +89,140 @@ public class BankFunction {
 	}
 	
 	// 2. 입금하기
-
 	public void inputMoney() {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("=============================");
-		System.out.println("입금하기를 선택하셨습니다.");
-		System.out.println("1. 본인 계좌에 입금하기");
-		System.out.println("2. 타인 계좌에 입금하기");
-		System.out.println("3. 뒤로가기");
-		System.out.print("메뉴 선택 : ");
-		int inputChoice = sc.nextInt();
-		if(inputChoice == 1) {
-			System.out.println("=======================================");
-			System.out.println("본인 계좌에 입금하기를 선택하셨습니다.");
-			System.out.print("본인 성명 : ");
-			String ckUser = sc.next();
-			sc.nextLine();
-			System.out.print("본인 계좌번호(4자리) : ");
-			String ckUserAccNum = sc.next();
-			sc.nextLine();
-			// 회원 등록시 입력한 이름과 계좌번호 비교
-			for(int i = 0; i < bankArrs.length; i++) {
-				// 문자열을 비교할 때는 .equals(비교할 변수)사용
-				// 문자열은 주소를 저장하기 때문에 내용이 같더라도 서로 다른 객체를 참조할 때
-				// == 연산자를 사용 시 다르다고 출력됨
-				if(bankArrs[i].getUser().equals(ckUser) && bankArrs[i].getAccountNum().equals(ckUserAccNum)) {
-					System.out.println("본인확인이 완료되었습니다.");
-					System.out.print("얼마를 입금하시겠습니까? : ");
-					int moneyInMyAcc = sc.nextInt();
-					// 입금할 금액을 받은 변수 moneyInMyAcc를 Bank 클래스의 balance에 누적
-					bankArrs[i].plusMoney(moneyInMyAcc);
-					System.out.printf("%d원 입금이 완료되었습니다.\n이용해주셔서 감사합니다.", moneyInMyAcc);
-					break;
+		for(;;) {
+			System.out.println("=============================");
+			System.out.println("입금하기를 선택하셨습니다.");
+			System.out.println("1. 본인 계좌에 입금하기");
+			System.out.println("2. 타인 계좌에 입금하기");
+			System.out.println("3. 뒤로가기");
+			System.out.print("메뉴 선택 : ");
+			int inputChoice = sc.nextInt();
+			if(inputChoice == 1) {
+				// 2-1. 본인 계좌에 입금하기
+				System.out.println("=======================================");
+				System.out.println("본인 계좌에 입금하기를 선택하셨습니다.");
+				System.out.print("본인 성명 : ");
+				String ckUser = sc.next();
+				sc.nextLine(); // 공백입력 방지
+				System.out.print("본인 계좌번호(4자리) : ");
+				String ckUserAccNum = sc.next();
+				sc.nextLine(); // 공백입력 방지
+				// 회원 등록시 입력한 이름과 계좌번호 비교
+				for(int i = 0; i < bankArrs.length; i++) {
+					// 문자열을 비교할 때는 .equals(비교할 변수)사용
+					// 문자열은 주소를 저장하기 때문에 내용이 같더라도 서로 다른 객체를 참조할 때
+					// == 연산자를 사용 시 다르다고 출력됨
+					if(bankArrs[i].getUser().equals(ckUser) && bankArrs[i].getAccountNum().equals(ckUserAccNum)) {
+						System.out.println("본인확인이 완료되었습니다.");
+						System.out.print("얼마를 입금하시겠습니까? : ");
+						int moneyInMyAcc = sc.nextInt();
+						// 입금할 금액을 받은 변수 moneyInMyAcc를 Bank 클래스의 balance에 누적
+						bankArrs[i].plusMoney(moneyInMyAcc);
+						System.out.printf("%d원 입금이 완료되었습니다.\n이용해주셔서 감사합니다.\n", moneyInMyAcc);
+						break;
+					}else {
+						System.out.println("입력하신 정보가 맞지 않습니다.(성명 or 계좌번호 오류)");
+						break;
+					}
+//					if(bankArrs[i] == null){
+//						// i번째 인덱스 객체 배열이 null이라면 break
+//						break;
+//					}
 				}
-				if(bankArrs[i] == null){
-					// i번째 인덱스 객체 배열이 null이라면 break
-					break;
+			} else if(inputChoice == 2) {
+				// 2-2. 타인 계좌에 입금하기
+				System.out.println("=======================================");
+				System.out.println("타인 계좌에 입금하기를 선택하셨습니다.");
+				System.out.print("본인 성명 : ");
+				String ckUser = sc.next();
+				sc.nextLine(); // 공백입력 방지
+				System.out.print("본인 계좌번호(4자리) : ");
+				String ckUserAccNum = sc.next();
+				sc.nextLine(); // 공백입력 방지
+				for(int i = 0; i < bankArrs.length; i++) {
+					if(bankArrs[i].getUser().equals(ckUser) && bankArrs[i].getAccountNum().equals(ckUserAccNum)) {
+						System.out.println("본인확인이 완료되었습니다.");
+						System.out.print("타인 계좌번호(4자리) : ");
+						String ckOrtherAccNum = sc.next();
+						sc.nextLine(); // 공백입력 방지
+						for(int j = i+1; j < bankArrs.length; j++) {
+							if(bankArrs[j].getAccountNum().equals(ckOrtherAccNum)) {
+								System.out.printf("%s님의 계좌 확인이 완료되었습니다.\n", bankArrs[j].getUser());
+								System.out.print("입금할 금액 : ");
+								int moneyInMyAcc = sc.nextInt();
+								// 입금할 금액이 계좌잔액보다 적으면 잔액부족 메시지 출력
+								if(bankArrs[i].getBalance() >= moneyInMyAcc) {
+									bankArrs[j].plusMoney(moneyInMyAcc);
+									bankArrs[i].minusMoney(moneyInMyAcc);
+									System.out.printf("%d원 입금이 완료되었습니다.\n이용해주셔서 감사합니다.\n", moneyInMyAcc);
+									break;	// j for문 탈출			
+								} else {
+									System.out.println("계좌에 잔액이 부족합니다.");
+									break; // j for문 탈출	
+								}
+							} else {
+								System.out.println("등록 되어있지 않은 계좌입니다.");
+								break; // j for문 탈출	
+							}
+						}
+						break; // i for문 탈출	
+					} else{
+						System.out.println("존재하지 않는 유저 정보입니다.");
+						break; // i for문 탈출	
+					}
 				}
+				
+			}else if(inputChoice == 3) {
+				// 2-3. 뒤로가기
+				System.out.println("뒤로가기를 선택하셨습니다.");
+				break; // 무한루프 for문 탈출
+			}else {
+				// 2-4. 1~3번 이외에 숫자 입력 시 오류 메시지 출력
+				System.out.println("==================================================");
+				System.out.println("잘못 입력하셨습니다. 메뉴에 해당하는 번호를 입력해주세요.");
+				System.out.println("==================================================");
 			}
 		}
-		
 	}
 	
 	// 3. 출금하기
 	public void outputMoney() {
-		
+		Scanner sc = new Scanner(System.in);
+		System.out.println("=======================================");
+		System.out.println("출금하기를 선택하셨습니다.");
+		System.out.print("본인 성명 : ");
+		String ckUser = sc.next();
+		sc.nextLine(); // 공백입력 방지
+		System.out.print("본인 계좌번호(4자리) : ");
+		String ckUserAccNum = sc.next();
+		sc.nextLine(); // 공백입력 방지
+		// 회원 등록시 입력한 이름과 계좌번호 비교
+		for(int i = 0; i < bankArrs.length; i++) {
+			if(bankArrs[i].getUser().equals(ckUser) && bankArrs[i].getAccountNum().equals(ckUserAccNum)) {
+				System.out.println("본인확인이 완료되었습니다.");
+				System.out.print("얼마를 출금하시겠습니까? : ");
+				int moneyInMyAcc = sc.nextInt();
+				// 출금할 금액을 받은 변수 moneyInMyAcc를 Bank 클래스의 balance에서 차감
+				if(bankArrs[i].getBalance() >= moneyInMyAcc) {
+					bankArrs[i].minusMoney(moneyInMyAcc);
+					System.out.printf("%d원 출금이 완료되었습니다. 잔액 : %d\n이용해주셔서 감사합니다.\n", moneyInMyAcc, bankArrs[i].getBalance());
+					break;					
+				}else {
+					System.out.println("통장에 잔액이 부족합니다.");
+					break;
+				}
+			} else {
+				System.out.println("입력하신 정보가 맞지 않습니다.(성명 or 계좌번호 오류)");
+				break;
+			}
+//			if(bankArrs[i] == null){
+//				// i번째 인덱스 객체 배열이 null이라면 break
+//				break;
+//			}
+		}
 	}
-	
 	// 4. 잔고확인
 	public void printUserInfo() {
 		System.out.println("====== 사용자 잔고확인 ======");
@@ -141,8 +237,10 @@ public class BankFunction {
 				if(bankArrs[i] == null) {
 					break;					
 				}
-			} else if(bankArrs[i] == null) {
-				// 객체 배열 내에 저장된 사용자 정보가 하나도 없다면 출력
+			} 
+			if(bankArrs[0] == null) {
+				// 객체 배열 내에 첫번째 인덱스부터 사용자의 정보가 저장되는데
+				// 만약 첫번째 사용자 정보가 없다면 등록된 계좌 없음 출력
 				System.out.println("등록된 계좌가 없습니다.");
 				System.out.println("=============================");
 				break;
@@ -155,17 +253,11 @@ public class BankFunction {
 		System.out.println("프로그램이 종료되었습니다.");
 	}
 	
-	// 6. 오류 메시지 출력
+	// 6. 메인메뉴에 없는 숫자 입력 시 오류 메시지 출력
 	public void errorMasage() {
 		System.out.println("==================================================");
 		System.out.println("잘못 입력하셨습니다. 메뉴에 해당하는 번호를 입력해주세요.");
 		System.out.println("==================================================");
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }
