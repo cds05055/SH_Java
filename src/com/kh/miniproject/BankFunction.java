@@ -109,28 +109,28 @@ public class BankFunction {
 				System.out.print("본인 계좌번호(4자리) : ");
 				String ckUserAccNum = sc.next();
 				sc.nextLine(); // 공백입력 방지
+				
 				// 회원 등록시 입력한 이름과 계좌번호 비교
 				for(int i = 0; i < bankArrs.length; i++) {
 					// 문자열을 비교할 때는 .equals(비교할 변수)사용
 					// 문자열은 주소를 저장하기 때문에 내용이 같더라도 서로 다른 객체를 참조할 때
 					// == 연산자를 사용 시 다르다고 출력됨
-					if(bankArrs[i].getUser().equals(ckUser) && bankArrs[i].getAccountNum().equals(ckUserAccNum)) {
-						System.out.println("본인확인이 완료되었습니다.");
-						System.out.print("얼마를 입금하시겠습니까? : ");
-						int moneyInMyAcc = sc.nextInt();
-						// 입금할 금액을 받은 변수 moneyInMyAcc를 Bank 클래스의 balance에 누적
-						bankArrs[i].plusMoney(moneyInMyAcc);
-						System.out.printf("%d원 입금이 완료되었습니다.\n이용해주셔서 감사합니다.\n", moneyInMyAcc);
-						break;
-					}else {
+					try {
+						if(bankArrs[i].getUser().equals(ckUser) && bankArrs[i].getAccountNum().equals(ckUserAccNum)) {
+							System.out.println("본인확인이 완료되었습니다.");
+							System.out.print("얼마를 입금하시겠습니까? : ");
+							int moneyInMyAcc = sc.nextInt();
+							// 입금할 금액을 받은 변수 moneyInMyAcc를 Bank 클래스의 balance에 누적
+							bankArrs[i].plusMoney(moneyInMyAcc);
+							System.out.printf("%d원 입금이 완료되었습니다.\n이용해주셔서 감사합니다.\n", moneyInMyAcc);
+							break;
+						}						
+					} catch(NullPointerException e) {
 						System.out.println("입력하신 정보가 맞지 않습니다.(성명 or 계좌번호 오류)");
 						break;
 					}
-//					if(bankArrs[i] == null){
-//						// i번째 인덱스 객체 배열이 null이라면 break
-//						break;
-//					}
 				}
+				
 			} else if(inputChoice == 2) {
 				// 2-2. 타인 계좌에 입금하기
 				System.out.println("=======================================");
@@ -162,16 +162,22 @@ public class BankFunction {
 									System.out.println("계좌에 잔액이 부족합니다.");
 									break; // j for문 탈출	
 								}
-							} else {
-								System.out.println("등록 되어있지 않은 계좌입니다.");
-								break; // j for문 탈출	
-							}
+							} 
+//							else {
+//								System.out.println("등록 되어있지 않은 계좌입니다.");
+//								break; // j for문 탈출	
+//							}
+							// 위 코드를 활성화 하면 j++에 dead code 뜸 오류 수정 or dead code 안뜨면서 출력하는 방법 찾기 
+							// try catch문 사용
 						}
 						break; // i for문 탈출	
-					} else{
-						System.out.println("존재하지 않는 유저 정보입니다.");
-						break; // i for문 탈출	
-					}
+					} 
+//					else{
+//						System.out.println("존재하지 않는 유저 정보입니다.");
+//						break; // i for문 탈출	
+//					}
+					// 위 코드를 활성화 하면 i++에 dead code 뜸 오류 수정 or dead code 안뜨면서 출력하는 방법 찾기
+					// try catch문 사용
 				}
 				
 			}else if(inputChoice == 3) {
@@ -213,10 +219,14 @@ public class BankFunction {
 					System.out.println("통장에 잔액이 부족합니다.");
 					break;
 				}
-			} else {
-				System.out.println("입력하신 정보가 맞지 않습니다.(성명 or 계좌번호 오류)");
-				break;
-			}
+			} 
+//			else {
+//				System.out.println("입력하신 정보가 맞지 않습니다.(성명 or 계좌번호 오류)");
+//				break;
+//			}
+			// 위 코드를 활성화 하면 i++에 dead code 뜸 오류 수정 or dead code 안뜨면서 출력하는 방법 찾기
+			// try catch문 사용
+			
 //			if(bankArrs[i] == null){
 //				// i번째 인덱스 객체 배열이 null이라면 break
 //				break;
