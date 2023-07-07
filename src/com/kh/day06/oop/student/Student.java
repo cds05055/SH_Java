@@ -21,7 +21,7 @@ public class Student {
 	}
 	
 	public double getAvg() {
-		double avg = (double)(this.score1 + this.score2) / 3;
+		double avg = (double)(this.score1 + this.score2) / 2;
 		return avg;
 	}
 	
