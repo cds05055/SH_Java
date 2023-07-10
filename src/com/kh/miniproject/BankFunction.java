@@ -1,5 +1,6 @@
 package com.kh.miniproject;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BankFunction {
@@ -129,6 +130,8 @@ public class BankFunction {
 						System.out.println("입력하신 정보가 맞지 않습니다.(성명 or 계좌번호 오류)");
 						break;
 					}
+					// else문 사용시 입력한 이름과 계좌번호를 비교하는 for문의 i++증감식이 Dead code되어 작동하지 않음
+					// try catch문을 사용하여 Exception에러에 문구를 출력후 for문을 탈출할 break문 작성
 				}
 				
 			} else if(inputChoice == 2) {
@@ -142,42 +145,41 @@ public class BankFunction {
 				String ckUserAccNum = sc.next();
 				sc.nextLine(); // 공백입력 방지
 				for(int i = 0; i < bankArrs.length; i++) {
-					if(bankArrs[i].getUser().equals(ckUser) && bankArrs[i].getAccountNum().equals(ckUserAccNum)) {
-						System.out.println("본인확인이 완료되었습니다.");
-						System.out.print("타인 계좌번호(4자리) : ");
-						String ckOrtherAccNum = sc.next();
-						sc.nextLine(); // 공백입력 방지
-						for(int j = i+1; j < bankArrs.length; j++) {
-							if(bankArrs[j].getAccountNum().equals(ckOrtherAccNum)) {
-								System.out.printf("%s님의 계좌 확인이 완료되었습니다.\n", bankArrs[j].getUser());
-								System.out.print("입금할 금액 : ");
-								int moneyInMyAcc = sc.nextInt();
-								// 입금할 금액이 계좌잔액보다 적으면 잔액부족 메시지 출력
-								if(bankArrs[i].getBalance() >= moneyInMyAcc) {
-									bankArrs[j].plusMoney(moneyInMyAcc);
-									bankArrs[i].minusMoney(moneyInMyAcc);
-									System.out.printf("%d원 입금이 완료되었습니다.\n이용해주셔서 감사합니다.\n", moneyInMyAcc);
-									break;	// j for문 탈출			
-								} else {
-									System.out.println("계좌에 잔액이 부족합니다.");
-									break; // j for문 탈출	
+					try {
+						if(bankArrs[i].getUser().equals(ckUser) && bankArrs[i].getAccountNum().equals(ckUserAccNum)) {
+							System.out.println("본인확인이 완료되었습니다.");
+							System.out.print("타인 계좌번호(4자리) : ");
+							String ckOrtherAccNum = sc.next();
+							sc.nextLine(); // 공백입력 방지
+							for(int j = 0; j < bankArrs.length; j++) {
+								if(bankArrs[j].getAccountNum().equals(ckOrtherAccNum)) {
+									System.out.printf("%s님의 계좌 확인이 완료되었습니다.\n", bankArrs[j].getUser());
+									System.out.print("입금할 금액 : ");
+									int moneyInMyAcc = sc.nextInt();
+									// 입금할 금액이 계좌잔액보다 적으면 잔액부족 메시지 출력
+									if(bankArrs[i].getBalance() >= moneyInMyAcc) {
+										bankArrs[j].plusMoney(moneyInMyAcc);
+										bankArrs[i].minusMoney(moneyInMyAcc);
+										System.out.printf("%d원 입금이 완료되었습니다.\n이용해주셔서 감사합니다.\n", moneyInMyAcc);
+										break;	// j for문 탈출			
+									} else {
+										System.out.println("계좌에 잔액이 부족합니다.");
+										break; // j for문 탈출	
+									}
 								}
-							} 
-//							else {
-//								System.out.println("등록 되어있지 않은 계좌입니다.");
-//								break; // j for문 탈출	
-//							}
-							// 위 코드를 활성화 하면 j++에 dead code 뜸 오류 수정 or dead code 안뜨면서 출력하는 방법 찾기 
-							// try catch문 사용
-						}
-						break; // i for문 탈출	
-					} 
-//					else{
-//						System.out.println("존재하지 않는 유저 정보입니다.");
-//						break; // i for문 탈출	
-//					}
-					// 위 코드를 활성화 하면 i++에 dead code 뜸 오류 수정 or dead code 안뜨면서 출력하는 방법 찾기
-					// try catch문 사용
+							}
+							break; // i for문 탈출	
+						} 
+					} catch(NullPointerException e) {
+						// 2-2 타인계좌 입금 시 본인인증 할 때 본인인증이 되지 않으면 출력하는 오류 메시지
+						System.out.println("입력하신 정보가 맞지 않습니다.(성명 or 계좌번호 오류)");
+						break;
+						// else문 사용 시 i++이 dead code가 되어버림
+						// try catch문 사용
+					} catch(InputMismatchException e) {
+						System.out.println("계좌번호를 입력해주세요.");
+						break;
+					}
 				}
 				
 			}else if(inputChoice == 3) {
@@ -206,31 +208,27 @@ public class BankFunction {
 		sc.nextLine(); // 공백입력 방지
 		// 회원 등록시 입력한 이름과 계좌번호 비교
 		for(int i = 0; i < bankArrs.length; i++) {
-			if(bankArrs[i].getUser().equals(ckUser) && bankArrs[i].getAccountNum().equals(ckUserAccNum)) {
-				System.out.println("본인확인이 완료되었습니다.");
-				System.out.print("얼마를 출금하시겠습니까? : ");
-				int moneyInMyAcc = sc.nextInt();
-				// 출금할 금액을 받은 변수 moneyInMyAcc를 Bank 클래스의 balance에서 차감
-				if(bankArrs[i].getBalance() >= moneyInMyAcc) {
-					bankArrs[i].minusMoney(moneyInMyAcc);
-					System.out.printf("%d원 출금이 완료되었습니다. 잔액 : %d\n이용해주셔서 감사합니다.\n", moneyInMyAcc, bankArrs[i].getBalance());
-					break;					
-				}else {
-					System.out.println("통장에 잔액이 부족합니다.");
-					break;
-				}
-			} 
-//			else {
-//				System.out.println("입력하신 정보가 맞지 않습니다.(성명 or 계좌번호 오류)");
-//				break;
-//			}
-			// 위 코드를 활성화 하면 i++에 dead code 뜸 오류 수정 or dead code 안뜨면서 출력하는 방법 찾기
-			// try catch문 사용
-			
-//			if(bankArrs[i] == null){
-//				// i번째 인덱스 객체 배열이 null이라면 break
-//				break;
-//			}
+			try {
+				if(bankArrs[i].getUser().equals(ckUser) && bankArrs[i].getAccountNum().equals(ckUserAccNum)) {
+					System.out.println("본인확인이 완료되었습니다.");
+					System.out.print("얼마를 출금하시겠습니까? : ");
+					int moneyInMyAcc = sc.nextInt();
+					// 출금할 금액을 받은 변수 moneyInMyAcc를 Bank 클래스의 balance에서 차감
+					if(bankArrs[i].getBalance() >= moneyInMyAcc) {
+						bankArrs[i].minusMoney(moneyInMyAcc);
+						System.out.printf("%d원 출금이 완료되었습니다. 잔액 : %d\n이용해주셔서 감사합니다.\n", moneyInMyAcc, bankArrs[i].getBalance());
+						break;					
+					}else {
+						System.out.println("통장에 잔액이 부족합니다.");
+						break;
+					}
+				} 
+			} catch(NullPointerException e) {
+				System.out.println("입력하신 정보가 맞지 않습니다.(성명 or 계좌번호 오류)");
+				break;
+				// else문 사용 시 i++에 dead code가 되어버림
+				// try catch문 사용
+			}
 		}
 	}
 	// 4. 잔고확인

@@ -1,4 +1,4 @@
-package com.kh.homework;
+package com.kh.homework.Music;
 
 public class Music {
 	String songName;
